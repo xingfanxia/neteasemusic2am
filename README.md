@@ -18,7 +18,7 @@
 更改`add_songs`中的相应`headers`
 
 ```
-python playlist2csv.py [playlist_id]
+python playlist2csv.py [User-Agent] [X-Dsid] [Cookie] [X-Guid] [playlist_id]
 ```
 
 > 假设播放列表的链接为 `http://music.163.com/#/m/playlist?id=12345678` 则 `playlist_id` 为 `12345678`

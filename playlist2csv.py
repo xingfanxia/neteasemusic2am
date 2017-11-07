@@ -26,7 +26,6 @@ def save_songs(songs, playlist_path):
                     song[k] = v.encode('utf-8')
             writer.writerow(song)
 
-
 def load_songs(playlist_path):
     with open(playlist_path) as playlist_file:
         reader = csv.DictReader(playlist_file)
@@ -148,13 +147,12 @@ def add_songs(songs):
         'Accept-Encoding': 'gzip',
         'X-Apple-itre': '0',
         'Client-DAAP-Version': '3.13',
-        'User-Agent': 'iTunes/12.7.1 (Macintosh; OS X 10.13)' +
-                      'AppleWebKit/604.1.38.1.6',
+        'User-Agent': sys.argv[1],
         'Connection': 'keep-alive',
         'Content-Type': 'application/x-dmap-tagged',
-        'X-Dsid': '10766363705',
-        'Cookie': "ns-mzf-inst=178-246-443-150-25-8125-402394-40-st13; mzf_in=402394; amp=11u2KVPljYrcesF6YEjaksvfAH+sNY7voeXH1Y6QMag0M7NktmOYadZrEB/8wfRYiZzOaoI1+jbAiqLg3XsrxHiYQg6kSbH0FMoP/UK2ds8F/+6TueueXecxjK6arRSRzWeWcZhzPHPzwpyEIbmOKKSJjkOxAUpLXSaeKDAVNEQ7+Lbqeg0Ym8NTWdYEtwJqLBCdmVAR87CHKQYf4ZXMcji4i3UfmldgSNxU1OUC5LE9pGSRf4/2vdqpAA7QSLOanpY+ppHQddcpomCT73zJ8Q==; amia-10766363705=kD9SuglietC3fASlhA7yu0g75kA8fUyud6fRaVo7NON0+O6y//nU17XMbtpmYVzK6P3L6CP31/F3WtFbspMZrQ==; itspod=40; TrPod=8; xp_ci=3z2bAm6yzB0sz4OhzB7LzM8pTwucS; X-Dsid=10766363705; mz_at0-10766363705=AwQAAAEBAAHXfAAAAABZ7DHAAuwYhf0odXYbTaBKSrnufpMTejk=; mz_at_ssl-10766363705=AwUAAAEBAAHXfAAAAABZ7DHAauqd8csmeOEbsHPFfacP/iVOrSM=; pldfltcid=112445e3f19843b384573012c1d6d1d2040; mt-asn-10766363705=0; mt-tkn-10766363705=Ak5iTw/GEgdkMPeCX3ahVtSEM6gsX4SZjPyWDzJvP5Qx3ycWcAP9KF3kXTbcf1TUsW7bPQWMJCSiQnj3kTqpxxdOMl6+dgvEFrB5d3q7FSDBMRikjtk7CPVMYcrRO0VenqPg3jrZbbuZvswE2gEt8Eq0wa80CGm0O3chBulzl/hMVbcLDHjqKELheTRYTqtfvLc6UfA=; groupingPillToken=1_iphone; mz_at0-10822620525=AwQAAAEBAAHXfAAAAABZyWORMY5Qg4kj1V+pKHPry98hqrspK+Q=; mt-asn-10822620525=5; mt-asn-896949555=5; mz_at0-896949555=AwQAAAEBAAHWuAAAAABYekyiUTBbUtgXzuIcU3p7pOuyU8x4oP4=",
-        'X-Guid': "ACBC32970519",
+        'X-Dsid': sys.argv[2],
+        'Cookie': sys.argv[3],
+        'X-Guid': sys.argv[4],
         'Content-Length': '77'
     }
     for song in songs:
@@ -179,7 +177,7 @@ def add_songs(songs):
                         song['Imported'] = 'not found'
                 else:
                     traceback.print_exc()
-                print(u'[Importe Fail]{} - {}: {}'.
+                print(u'[Import Failed]{} - {}: {}'.
                       format(title, artist, str(e)))
             break
 
@@ -187,7 +185,7 @@ def add_songs(songs):
 def main():
     songs = []
     try:
-        playlist_id = sys.argv[1]
+        playlist_id = sys.argv[5]
         playlist_path = './{0}.csv'.format(playlist_id)
         if not os.path.exists(playlist_path):
             tracks = download_playlist(playlist_id)
